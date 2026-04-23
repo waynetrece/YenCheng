@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>言成不動產 — 客戶頁面確認圖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brand: #244e86;
+    --brand-dark: #19375f;
+    --brand-soft: rgba(36, 78, 134, 0.08);
+    --ink: #1d2736;
+    --muted: #667085;
+    --border: #dbe3ee;
+    --border-soft: #edf2f7;
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --done: #1f9d68;
+    --pending: #b1bac8;
+    --accent: #e8bd52;
+    --m1: #244e86;
+    --m2: #8f5ed8;
+    --m3: #0f9f95;
+    --m4: #e8bd52;
+    --m5: #c06c58;
+  }
+
+  body {
+    background: linear-gradient(180deg, #f9fbfe 0%, #f2f5fa 100%);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(219, 227, 238, 0.9);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--brand-dark), var(--brand));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-text h1 {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .brand-text p {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .meta-chip,
+  .view-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .meta-chip {
+    background: var(--brand-soft);
+    color: var(--brand);
+  }
+
+  .view-link {
+    border: 1px solid var(--brand);
+    color: var(--brand);
+    transition: 0.2s ease;
+  }
+
+  .view-link:hover {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .hero {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 34px 40px 20px;
+  }
+
+  .hero-panel {
+    background:
+      linear-gradient(135deg, rgba(25, 55, 95, 0.96), rgba(36, 78, 134, 0.9)),
+      radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 32%);
+    color: #fff;
+    border-radius: 28px;
+    padding: 34px;
+    box-shadow: 0 22px 70px rgba(27, 58, 95, 0.18);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: auto -90px -90px auto;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .hero h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.12;
+    max-width: 14ch;
+    margin-bottom: 14px;
+  }
+
+  .hero p {
+    max-width: 70ch;
+    color: rgba(255,255,255,0.82);
+  }
+
+  .hero-note {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .hero-note::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9be4c2;
+  }
+
+  .summary {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px 8px;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: -24px;
+  }
+
+  .summary-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 0 14px 36px rgba(24, 44, 73, 0.06);
+  }
+
+  .summary-card strong {
+    display: block;
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--brand-dark);
+  }
+
+  .summary-card span {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .summary-card p {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .hint-bar {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 8px 40px 0;
+  }
+
+  .hint {
+    background: #fffdf5;
+    border: 1px solid #f3e5b4;
+    color: #7e620f;
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-size: 13px;
+  }
+
+  .canvas {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 28px 40px 88px;
+  }
+
+  .module {
+    margin-bottom: 36px;
+  }
+
+  .module-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: var(--module-soft);
+    border: 1px solid var(--module-border);
+  }
+
+  .module-index {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--module-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .module-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--module-color);
+  }
+
+  .module-desc {
+    color: var(--muted);
+    font-size: 13px;
+    margin-left: auto;
+  }
+
+  .module.m1 { --module-color: var(--m1); --module-soft: rgba(36, 78, 134, 0.08); --module-border: rgba(36, 78, 134, 0.14); }
+  .module.m2 { --module-color: var(--m2); --module-soft: rgba(143, 94, 216, 0.08); --module-border: rgba(143, 94, 216, 0.14); }
+  .module.m3 { --module-color: var(--m3); --module-soft: rgba(15, 159, 149, 0.08); --module-border: rgba(15, 159, 149, 0.14); }
+  .module.m4 { --module-color: var(--m4); --module-soft: rgba(232, 189, 82, 0.12); --module-border: rgba(232, 189, 82, 0.2); }
+  .module.m5 { --module-color: var(--m5); --module-soft: rgba(192, 108, 88, 0.1); --module-border: rgba(192, 108, 88, 0.16); }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    box-shadow: 0 10px 28px rgba(26, 39, 62, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card.preview {
+    cursor: pointer;
+  }
+
+  .card.preview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(26, 39, 62, 0.1);
+    border-color: var(--module-color);
+  }
+
+  .card.pending {
+    border-style: dashed;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+  }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: #eef3f9;
+    border-bottom: 1px solid var(--border-soft);
+    overflow: hidden;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .thumb.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pending);
+    font-size: 44px;
+    font-weight: 300;
+  }
+
+  .card-id,
+  .card-status {
+    position: absolute;
+    top: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 4px 9px;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .card-id {
+    left: 10px;
+    color: var(--module-color);
+  }
+
+  .card-status {
+    right: 10px;
+  }
+
+  .card-status.done {
+    color: var(--done);
+  }
+
+  .card-status.state {
+    color: var(--brand);
+  }
+
+  .card-status.pending {
+    color: var(--pending);
+  }
+
+  .card-body {
+    padding: 14px 15px 16px;
+  }
+
+  .card-body h3 {
+    font-size: 15px;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+
+  .card-body p {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .note-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+    margin-top: 10px;
+  }
+
+  .note-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 10px 28px rgba(26, 39, 62, 0.05);
+  }
+
+  .note-card h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .note-card ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .note-card li {
+    color: var(--muted);
+    font-size: 13px;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .note-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  .footer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px 48px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 18, 32, 0.92);
+    display: none;
+    z-index: 9999;
+    flex-direction: column;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lightbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    color: #fff;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .lightbox-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .lightbox-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .lightbox-body img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  }
+
+  .lightbox-close {
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1080px) {
+    .summary-grid,
+    .note-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header,
+    .hero,
+    .summary,
+    .hint-bar,
+    .canvas,
+    .footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .summary-grid,
+    .note-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      border-radius: 22px;
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .module-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .module-desc {
+      margin-left: 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand-wrap">
+      <div class="brand-mark">YC</div>
+      <div class="brand-text">
+        <h1>言成不動產 客戶頁面確認圖</h1>
+        <p>Yen Cheng Real Estate / 已提供畫面與報價架構對照</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="meta-chip">更新日期：2026-04-23</div>
+      <a class="view-link" href="flow.html">查看流程圖</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-panel">
+      <div class="eyebrow">Client Review Draft</div>
+      <h2>先對齊目前已完成頁面，再補齊缺頁與命名</h2>
+      <p>這份頁面確認圖先把你目前提供的設計稿整理成可核對版本。除了已完成畫面，也保留報價單中尚未提供的頁面，方便直接和客戶確認「哪些已完成、哪些待補、哪些命名要重新對齊」。</p>
+      <div class="hero-note">目前檔案來源：/Downloads/指標商辦-01</div>
+    </div>
+  </section>
+
+  <section class="summary">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <strong>9</strong>
+        <span>已提供畫面</span>
+        <p>這批資料夾內共 9 張畫面，可先放入客戶確認頁。</p>
+      </div>
+      <div class="summary-card">
+        <strong>8</strong>
+        <span>正式頁面</span>
+        <p>扣掉 1 張篩選展開狀態後，目前可視為 8 個正式頁面。</p>
+      </div>
+      <div class="summary-card">
+        <strong>1</strong>
+        <span>頁面狀態圖</span>
+        <p>租辦公清單另有一張篩選面板展開狀態，適合標成狀態頁。</p>
+      </div>
+      <div class="summary-card">
+        <strong>15</strong>
+        <span>報價單基礎頁</span>
+        <p>報價單初版前台架構共 15 頁，還有數頁尚未提供完成稿。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hint-bar">
+    <div class="hint">目前畫面顯示前台選單已含「租辦公 / 租店面 / 租住宅 / 指標商辦 / 關於言成 / 聯絡言成」。報價單中的「物件資訊 / 形象頁」可先視為同一層級整理，但最終命名建議再和客戶確認一次。</div>
+  </section>
+
+  <main class="canvas">
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#1f9d68"></span>已完成頁面</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#244e86"></span>狀態畫面</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#b1bac8"></span>待補頁面</div>
+    </div>
+
+    <section class="module m1">
+      <div class="module-head">
+        <div class="module-index">1</div>
+        <div class="module-title">首頁</div>
+        <div class="module-desc">報價單有列，但這批素材尚未提供首頁完成稿</div>
+      </div>
+      <div class="cards">
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">1-1</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>首頁</h3>
+            <p>主入口、主視覺、租賃分類導流與最新案件區塊待補。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="module m2">
+      <div class="module-head">
+        <div class="module-index">2</div>
+        <div class="module-title">形象 / 單層頁</div>
+        <div class="module-desc">已完成 2 頁，另 2 頁待補</div>
+      </div>
+      <div class="cards">
+        <article class="card preview" data-title="2-1 關於言成" data-image="images/關於言成.jpg">
+          <div class="thumb">
+            <img src="images/關於言成.jpg" alt="關於言成">
+            <div class="card-id">2-1</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>關於言成</h3>
+            <p>公司介紹、理念、服務內容，屬於單層形象頁。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">2-2</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>租貸須知</h3>
+            <p>報價單中有列，但這批素材尚未看到對應完成稿。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="2-3 聯絡言成" data-image="images/聯絡言成.jpg">
+          <div class="thumb">
+            <img src="images/聯絡言成.jpg" alt="聯絡言成">
+            <div class="card-id">2-3</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>聯絡言成</h3>
+            <p>聯絡表單、地址、電話與地圖資訊頁。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">2-4</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>FAQ</h3>
+            <p>報價單列為單層頁，目前尚未提供完成畫面。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="module m3">
+      <div class="module-head">
+        <div class="module-index">3</div>
+        <div class="module-title">指標商辦</div>
+        <div class="module-desc">列表 / 內容 2 頁都已提供</div>
+      </div>
+      <div class="cards">
+        <article class="card preview" data-title="3-1 指標商辦列表" data-image="images/指標商辦-01.jpg">
+          <div class="thumb">
+            <img src="images/指標商辦-01.jpg" alt="指標商辦列表">
+            <div class="card-id">3-1</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>指標商辦列表</h3>
+            <p>案件列表、區塊篩選、頁碼切換與浮動社群工具列。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="3-2 指標商辦內容頁" data-image="images/指標商辦-02.jpg">
+          <div class="thumb">
+            <img src="images/指標商辦-02.jpg" alt="指標商辦內容頁">
+            <div class="card-id">3-2</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>指標商辦內容頁</h3>
+            <p>物件主圖、基本資訊、地圖與相關物件推薦。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="module m4">
+      <div class="module-head">
+        <div class="module-index">4</div>
+        <div class="module-title">物件資訊 / 租賃分類頁</div>
+        <div class="module-desc">目前看到辦公、店面、住宅三類畫面，模組命名建議再確認</div>
+      </div>
+      <div class="cards">
+        <article class="card preview" data-title="4-1 租辦公列表" data-image="images/租辦公.jpg">
+          <div class="thumb">
+            <img src="images/租辦公.jpg" alt="租辦公列表">
+            <div class="card-id">4-1</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>租辦公列表</h3>
+            <p>辦公物件清單，帶搜尋區與列表卡片。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="4-1a 租辦公列表（篩選展開）" data-image="images/租辦公-00.jpg">
+          <div class="thumb">
+            <img src="images/租辦公-00.jpg" alt="租辦公篩選展開">
+            <div class="card-id">4-1a</div>
+            <div class="card-status state">狀態</div>
+          </div>
+          <div class="card-body">
+            <h3>租辦公列表 / 篩選展開</h3>
+            <p>同一頁的互動狀態圖，可保留給客戶確認篩選介面。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="4-2 租辦公內容頁" data-image="images/租辦公-01.jpg">
+          <div class="thumb">
+            <img src="images/租辦公-01.jpg" alt="租辦公內容頁">
+            <div class="card-id">4-2</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>租辦公內容頁</h3>
+            <p>單一物件細節、圖片、基本規格與地圖資訊。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="4-3 租店面列表" data-image="images/租店面.jpg">
+          <div class="thumb">
+            <img src="images/租店面.jpg" alt="租店面列表">
+            <div class="card-id">4-3</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>租店面列表</h3>
+            <p>店面類型物件列表頁，版型與租辦公接近。</p>
+          </div>
+        </article>
+
+        <article class="card preview" data-title="4-4 租住宅列表" data-image="images/租住宅.jpg">
+          <div class="thumb">
+            <img src="images/租住宅.jpg" alt="租住宅列表">
+            <div class="card-id">4-4</div>
+            <div class="card-status done">完成</div>
+          </div>
+          <div class="card-body">
+            <h3>租住宅列表</h3>
+            <p>住宅類型物件列表頁，應為另一條前台分類入口。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">4-5</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>搜尋結果 / 搜尋頁</h3>
+            <p>報價單有列物件搜尋頁，目前這批素材尚未看到獨立完成稿。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="module m5">
+      <div class="module-head">
+        <div class="module-index">5</div>
+        <div class="module-title">契約頁</div>
+        <div class="module-desc">報價單列 5 頁，這批素材尚未提供</div>
+      </div>
+      <div class="cards">
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">5-1</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>委託書</h3>
+            <p>契約流程頁，待提供樣式或確認是否納入這份對外核對頁。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">5-2</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>意向書</h3>
+            <p>契約相關頁面，目前尚未提供截圖。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">5-3</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>訂金收據</h3>
+            <p>契約相關頁面，目前尚未提供截圖。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">5-4</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>租賃契約書（上）</h3>
+            <p>報價單列為 2 頁，先拆成兩個頁面位置保留。</p>
+          </div>
+        </article>
+
+        <article class="card pending">
+          <div class="thumb empty">
+            <div class="card-id">5-5</div>
+            <div class="card-status pending">待補</div>
+            +
+          </div>
+          <div class="card-body">
+            <h3>租賃契約書（下）</h3>
+            <p>報價單列為 2 頁，先拆成兩個頁面位置保留。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="note-grid">
+      <article class="note-card">
+        <h3>目前建議直接和客戶確認的點</h3>
+        <ul>
+          <li>前台主選單現在是依「租辦公 / 租店面 / 租住宅 / 指標商辦」分類，是否就是最終正式資訊架構。</li>
+          <li>報價單中的「物件資訊」模組，是否實際對應到目前這些租賃分類列表與內容頁。</li>
+          <li>租辦公的篩選展開畫面，要不要保留在客戶確認圖中當作互動狀態頁。</li>
+          <li>契約頁是否真的要放進這次對外核對流程，還是只做內部開發清單即可。</li>
+        </ul>
+      </article>
+
+      <article class="note-card">
+        <h3>這一版先缺的畫面</h3>
+        <ul>
+          <li>首頁主視覺與首頁各區塊。</li>
+          <li>租貸須知與 FAQ 單層頁。</li>
+          <li>物件搜尋頁或更完整的搜尋結果頁。</li>
+          <li>全部 5 頁契約相關畫面。</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    言成不動產客戶確認圖 / 圖檔來源：<strong>/Users/waynechen/Downloads/指標商辦-01</strong>
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-header">
+      <div class="lightbox-title" id="lightboxTitle">預覽</div>
+      <button class="lightbox-close" id="lightboxClose" type="button">關閉</button>
+    </div>
+    <div class="lightbox-body">
+      <img id="lightboxImage" alt="preview">
+    </div>
+  </div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  document.querySelectorAll('.card.preview').forEach((card) => {
+    card.addEventListener('click', () => {
+      lightboxTitle.textContent = card.dataset.title || '預覽';
+      lightboxImage.src = card.dataset.image;
+      lightboxImage.alt = card.dataset.title || '預覽';
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    lightboxImage.src = '';
+  });
+
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) {
+      lightbox.classList.remove('active');
+      lightboxImage.src = '';
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      lightbox.classList.remove('active');
+      lightboxImage.src = '';
+    }
+  });
+</script>
+</body>
+</html>

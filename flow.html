@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>言成不動產 — 頁面流程圖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brand: #244e86;
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --ink: #1d2736;
+    --muted: #6b7280;
+    --border: #dbe3ee;
+    --m1: #244e86;
+    --m2: #8f5ed8;
+    --m3: #0f9f95;
+    --m4: #e8bd52;
+    --m5: #c06c58;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+    overflow: auto;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    min-width: max-content;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #19375f, #244e86);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .header h1 {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .header h1 span {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chip,
+  .link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .chip {
+    background: rgba(36, 78, 134, 0.08);
+    color: var(--brand);
+  }
+
+  .link {
+    text-decoration: none;
+    border: 1px solid var(--brand);
+    color: var(--brand);
+  }
+
+  .legend {
+    min-width: max-content;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .help {
+    min-width: max-content;
+    padding: 10px 32px;
+    background: #fffdf5;
+    border-bottom: 1px solid #f3e5b4;
+    color: #7e620f;
+    font-size: 13px;
+  }
+
+  .page-wrap {
+    display: inline-block;
+    min-width: 100%;
+  }
+
+  .canvas {
+    padding: 44px 40px 96px;
+    min-width: max-content;
+  }
+
+  .entry {
+    width: 220px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #19375f, #244e86);
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(25, 55, 95, 0.24);
+  }
+
+  .entry strong {
+    display: block;
+    font-size: 17px;
+  }
+
+  .entry span {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 3px;
+  }
+
+  .trunk {
+    width: 2px;
+    height: 34px;
+    margin: 0 auto;
+    background: var(--border);
+  }
+
+  .branches {
+    position: relative;
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+  }
+
+  .branches::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 160px);
+    height: 2px;
+    background: var(--border);
+  }
+
+  .branch {
+    width: 224px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .stub {
+    width: 2px;
+    height: 18px;
+    background: var(--color);
+  }
+
+  .branch-head {
+    background: var(--color);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(24, 44, 73, 0.12);
+  }
+
+  .line {
+    width: 2px;
+    height: 16px;
+    background: var(--color);
+  }
+
+  .tree-card {
+    width: 200px;
+    background: var(--card);
+    border: 2px solid var(--color);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(24, 44, 73, 0.08);
+    cursor: pointer;
+  }
+
+  .tree-card.pending {
+    cursor: default;
+    border-style: dashed;
+  }
+
+  .tree-card img,
+  .tree-empty {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+    background: #eef3f9;
+  }
+
+  .tree-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b1bac8;
+    font-size: 42px;
+    font-weight: 300;
+  }
+
+  .tree-id {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(255,255,255,0.95);
+    color: var(--color);
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .tree-status {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .tree-status.done { color: #1f9d68; }
+  .tree-status.state { color: var(--brand); }
+  .tree-status.pending { color: #b1bac8; }
+
+  .tree-card-wrap {
+    position: relative;
+  }
+
+  .tree-label {
+    padding: 10px 12px 12px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .tree-label span {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .sub-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sub-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px dashed #b6c0ce;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .sub-note::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #b6c0ce;
+  }
+
+  .note-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .note-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 10px 28px rgba(24, 44, 73, 0.05);
+  }
+
+  .note-card h2 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .note-card ul {
+    list-style: none;
+    display: grid;
+    gap: 9px;
+  }
+
+  .note-card li {
+    position: relative;
+    padding-left: 15px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .note-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: rgba(11, 18, 32, 0.92);
+    z-index: 9999;
+    flex-direction: column;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lightbox-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .lightbox-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .lightbox-close {
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .lightbox-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .lightbox-body img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  }
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">YC</div>
+      <h1>言成不動產 頁面流程圖<span>依目前已提供畫面整理的前台路徑</span></h1>
+    </div>
+    <div class="header-right">
+      <div class="chip">資料版本：2026-04-23</div>
+      <a class="link" href="index.html">查看總覽</a>
+    </div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:#1f9d68"></span>完成頁面</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#244e86"></span>狀態畫面</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#b1bac8"></span>待補頁面</div>
+  </div>
+
+  <div class="help">目前先用首頁作為入口節點，把已完成的租賃分類、指標商辦與單層頁放進流程。契約頁仍先保留在末端待補。</div>
+
+  <div class="page-wrap">
+    <main class="canvas">
+      <div class="entry">
+        <strong>首頁</strong>
+        <span>主入口 / 導覽分流</span>
+      </div>
+      <div class="trunk"></div>
+
+      <section class="branches">
+        <div class="branch" style="--color: var(--m1);">
+          <div class="stub"></div>
+          <div class="branch-head">首頁</div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">1-1</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">首頁<span>主視覺 / 分類入口</span></div>
+          </div>
+        </div>
+
+        <div class="branch" style="--color: var(--m2);">
+          <div class="stub"></div>
+          <div class="branch-head">形象 / 單層頁</div>
+          <div class="line"></div>
+          <div class="tree-card" data-title="2-1 關於言成" data-image="images/關於言成.jpg">
+            <div class="tree-card-wrap">
+              <img src="images/關於言成.jpg" alt="關於言成">
+              <div class="tree-id">2-1</div>
+              <div class="tree-status done">完成</div>
+            </div>
+            <div class="tree-label">關於言成<span>品牌 / 公司介紹</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">2-2</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">租貸須知<span>單層頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card" data-title="2-3 聯絡言成" data-image="images/聯絡言成.jpg">
+            <div class="tree-card-wrap">
+              <img src="images/聯絡言成.jpg" alt="聯絡言成">
+              <div class="tree-id">2-3</div>
+              <div class="tree-status done">完成</div>
+            </div>
+            <div class="tree-label">聯絡言成<span>聯絡資訊 / 表單</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">2-4</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">FAQ<span>單層頁</span></div>
+          </div>
+        </div>
+
+        <div class="branch" style="--color: var(--m3);">
+          <div class="stub"></div>
+          <div class="branch-head">指標商辦</div>
+          <div class="line"></div>
+          <div class="tree-card" data-title="3-1 指標商辦列表" data-image="images/指標商辦-01.jpg">
+            <div class="tree-card-wrap">
+              <img src="images/指標商辦-01.jpg" alt="指標商辦列表">
+              <div class="tree-id">3-1</div>
+              <div class="tree-status done">完成</div>
+            </div>
+            <div class="tree-label">指標商辦列表<span>案件清單 / 分頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="sub-note">點擊案件卡片進入內容頁</div>
+          <div class="line"></div>
+          <div class="tree-card" data-title="3-2 指標商辦內容頁" data-image="images/指標商辦-02.jpg">
+            <div class="tree-card-wrap">
+              <img src="images/指標商辦-02.jpg" alt="指標商辦內容頁">
+              <div class="tree-id">3-2</div>
+              <div class="tree-status done">完成</div>
+            </div>
+            <div class="tree-label">指標商辦內容頁<span>基本資訊 / 地圖 / 相關物件</span></div>
+          </div>
+        </div>
+
+        <div class="branch" style="--color: var(--m4);">
+          <div class="stub"></div>
+          <div class="branch-head">物件資訊 / 租賃分類</div>
+          <div class="line"></div>
+
+          <div class="sub-branch">
+            <div class="tree-card" data-title="4-1 租辦公列表" data-image="images/租辦公.jpg">
+              <div class="tree-card-wrap">
+                <img src="images/租辦公.jpg" alt="租辦公列表">
+                <div class="tree-id">4-1</div>
+                <div class="tree-status done">完成</div>
+              </div>
+              <div class="tree-label">租辦公列表<span>物件清單</span></div>
+            </div>
+            <div class="line"></div>
+            <div class="tree-card" data-title="4-1a 租辦公篩選展開" data-image="images/租辦公-00.jpg">
+              <div class="tree-card-wrap">
+                <img src="images/租辦公-00.jpg" alt="租辦公篩選展開">
+                <div class="tree-id">4-1a</div>
+                <div class="tree-status state">狀態</div>
+              </div>
+              <div class="tree-label">租辦公列表 / 篩選展開<span>同頁互動狀態</span></div>
+            </div>
+            <div class="line"></div>
+            <div class="sub-note">點擊物件卡片進入內容頁</div>
+            <div class="line"></div>
+            <div class="tree-card" data-title="4-2 租辦公內容頁" data-image="images/租辦公-01.jpg">
+              <div class="tree-card-wrap">
+                <img src="images/租辦公-01.jpg" alt="租辦公內容頁">
+                <div class="tree-id">4-2</div>
+                <div class="tree-status done">完成</div>
+              </div>
+              <div class="tree-label">租辦公內容頁<span>案件細節 / 地圖</span></div>
+            </div>
+            <div class="line"></div>
+            <div class="tree-card" data-title="4-3 租店面列表" data-image="images/租店面.jpg">
+              <div class="tree-card-wrap">
+                <img src="images/租店面.jpg" alt="租店面列表">
+                <div class="tree-id">4-3</div>
+                <div class="tree-status done">完成</div>
+              </div>
+              <div class="tree-label">租店面列表<span>另一租賃分類入口</span></div>
+            </div>
+            <div class="line"></div>
+            <div class="tree-card" data-title="4-4 租住宅列表" data-image="images/租住宅.jpg">
+              <div class="tree-card-wrap">
+                <img src="images/租住宅.jpg" alt="租住宅列表">
+                <div class="tree-id">4-4</div>
+                <div class="tree-status done">完成</div>
+              </div>
+              <div class="tree-label">租住宅列表<span>另一租賃分類入口</span></div>
+            </div>
+            <div class="line"></div>
+            <div class="tree-card pending">
+              <div class="tree-card-wrap">
+                <div class="tree-empty">+</div>
+                <div class="tree-id">4-5</div>
+                <div class="tree-status pending">待補</div>
+              </div>
+              <div class="tree-label">搜尋頁 / 搜尋結果頁<span>報價單有列</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch" style="--color: var(--m5);">
+          <div class="stub"></div>
+          <div class="branch-head">契約頁</div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">5-1</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">委託書<span>契約頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">5-2</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">意向書<span>契約頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">5-3</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">訂金收據<span>契約頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">5-4</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">租賃契約書（上）<span>契約頁</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="tree-card pending">
+            <div class="tree-card-wrap">
+              <div class="tree-empty">+</div>
+              <div class="tree-id">5-5</div>
+              <div class="tree-status pending">待補</div>
+            </div>
+            <div class="tree-label">租賃契約書（下）<span>契約頁</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="note-grid">
+        <article class="note-card">
+          <h2>這張流程圖目前反映的資訊</h2>
+          <ul>
+            <li>指標商辦目前已完整看到列表到內容頁的兩層結構。</li>
+            <li>租辦公目前已看到列表、篩選狀態與內容頁，流程最完整。</li>
+            <li>租店面與租住宅目前只有列表畫面，尚未看到內容頁。</li>
+            <li>首頁、租貸須知、FAQ、契約頁仍需補圖或確認是否延後。</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <h2>接下來最值得補的畫面</h2>
+          <ul>
+            <li>首頁，因為它決定整個導覽和模組命名是否要重排。</li>
+            <li>租貸須知與 FAQ，這兩頁已在報價單內，但目前前台證據還不足。</li>
+            <li>租店面 / 租住宅的內容頁，如果客戶也要做完整物件流程。</li>
+            <li>契約頁若是要給客戶核對，建議至少先補 1 頁樣式方向。</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-head">
+      <div class="lightbox-title" id="lightboxTitle">預覽</div>
+      <button class="lightbox-close" id="lightboxClose" type="button">關閉</button>
+    </div>
+    <div class="lightbox-body">
+      <img id="lightboxImage" alt="preview">
+    </div>
+  </div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  document.querySelectorAll('.tree-card:not(.pending)').forEach((card) => {
+    card.addEventListener('click', () => {
+      lightboxTitle.textContent = card.dataset.title || '預覽';
+      lightboxImage.src = card.dataset.image;
+      lightboxImage.alt = card.dataset.title || '預覽';
+      lightbox.classList.add('active');
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightboxImage.src = '';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+</script>
+</body>
+</html>
